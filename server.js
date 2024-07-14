@@ -8,10 +8,10 @@ const apiProxy = proxy.createProxyMiddleware("/api", {
   changeOrigin: true
 });
 app.use(apiProxy);
-app.use(express.static(__dirname + "/dist/airbnb-clone-front"));
+app.use(express.static(__dirname + "/dist/airbnb-clone-front/browser"));
 
 app.get("/*", (req, res) => {
-  res.sendFile(__dirname + "/dist/airbnb-clone-front/index.html")
+  res.sendFile(__dirname + "/dist/airbnb-clone-front/browser/index.html")
 });
 
 app.listen(process.env.PORT || 3000);

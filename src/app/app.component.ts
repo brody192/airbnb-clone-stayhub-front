@@ -8,12 +8,13 @@ import {FooterComponent} from "./layout/footer/footer.component";
 import {ToastModule} from "primeng/toast";
 import {ToastService} from "./layout/toast.service";
 import {MessageService} from "primeng/api";
+import {APP_BASE_HREF} from "@angular/common";
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, Button, FontAwesomeModule, NavbarComponent, FooterComponent, ToastModule],
-  providers: [MessageService],
+  providers: [MessageService,{provide: APP_BASE_HREF, useValue: '/airbnb-clone-front'}],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
