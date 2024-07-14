@@ -9,6 +9,8 @@ import {Pagination} from "../core/model/request.model";
 import {filter, Subscription} from "rxjs";
 import {Category} from "../layout/navbar/category/category.model";
 import {TenantListingService} from "../tenant/tenant-listing.service";
+import {Search} from "../tenant/search/search.model";
+import dayjs from "dayjs";
 
 @Component({
   selector: 'app-home',
@@ -57,7 +59,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // this.startNewSearch();
+    this.startNewSearch();
     this.listenToChangeCategory();
   }
 
@@ -108,31 +110,31 @@ export class HomeComponent implements OnInit, OnDestroy {
     })
   }
 
-  // private startNewSearch(): void {
-  //   this.activatedRoute.queryParams.pipe(
-  //     filter(params => params['location']),
-  //   ).subscribe({
-  //     next: params => {
-  //       this.searchIsLoading = true;
-  //       this.loading = true;
-  //       const newSearch: Search = {
-  //         dates: {
-  //           startDate: dayjs(params["startDate"]).toDate(),
-  //           endDate: dayjs(params["endDate"]).toDate(),
-  //         },
-  //         infos: {
-  //           guests: {value: params['guests']},
-  //           bedrooms: {value: params['bedrooms']},
-  //           beds: {value: params['beds']},
-  //           baths: {value: params['baths']},
-  //         },
-  //         location: params['location'],
-  //       };
-  //
-  //       this.tenantListingService.searchListing(newSearch, this.pageRequest);
-  //     }
-  //   })
-  // }
+  private startNewSearch(): void {
+    this.activatedRoute.queryParams.pipe(
+      filter(params => params['location']),
+    ).subscribe({
+      next: params => {
+        this.searchIsLoading = true;
+        this.loading = true;
+        const newSearch: Search = {
+          dates: {
+            startDate: dayjs(params["startDate"]).toDate(),
+            endDate: dayjs(params["endDate"]).toDate(),
+          },
+          infos: {
+            guests: {value: params['guests']},
+            bedrooms: {value: params['bedrooms']},
+            beds: {value: params['beds']},
+            baths: {value: params['baths']},
+          },
+          location: params['location'],
+        };
+
+        this.tenantListingService.searchListing(newSearch, this.pageRequest);
+      }
+    })
+  }
 
   onResetSearchFilter() {
     this.router.navigate(["/"], {
